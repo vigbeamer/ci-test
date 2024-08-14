@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Opens Cypress app
+
+./node_modules/.bin/cypress open "$@"

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Run all tests headless
+#   $ bin/test
+#
+# Run a single test
+#   $ bin/test -s cypress/integration/path-to.spec.js
+#
+# Run non-headless
+#   $ bin/test --headed
+#
+# Run with environment variables
+#   $ CYPRESS_SITE_URL=https://userflow.local:4040 CYPRESS_APP_URL=https://userflow.local:4040/app bin/test
+#
+# ..or:
+#   $ export CYPRESS_SITE_URL=https://userflow.local:4040
+#   $ export CYPRESS_APP_URL=https://userflow.local:4040/app
+#   $ bin/test
+
+./node_modules/.bin/cypress run "$@"
