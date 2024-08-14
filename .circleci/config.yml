@@ -9,4 +9,11 @@ jobs:
       - image: cimg/node:17.2.0
     steps:
       - checkout
-      - run: node --version
+      - run:
+          working_directory: e2e
+          name: Install dependencies
+          command: npm install
+      - run:
+          working_directory: e2e
+          name: Run e2e
+          command: npx playwright test
