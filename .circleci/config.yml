@@ -15,5 +15,9 @@ jobs:
           command: npm install
       - run:
           working_directory: e2e
+          name: Setup playwright
+          command: npx playwright install
+      - run:
+          working_directory: e2e
           name: Run e2e
           command: npx playwright test
