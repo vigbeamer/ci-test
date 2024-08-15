@@ -1,32 +1,35 @@
 import {
   MailinatorClient,
   GetInboxRequest,
-  GetMessageRequest
-} from 'mailinator-client'
-import {MAILINATOR_TOKEN, MAILINATOR_DOMAIN} from '@/support/constants.ts'
+  GetMessageRequest,
+} from "mailinator-client";
+import { MAILINATOR_TOKEN, MAILINATOR_DOMAIN } from "@/support/constants.ts";
 
-export const getEmailVerificationLink = async username => {
-  const mailinatorClient = new MailinatorClient(MAILINATOR_TOKEN)
+export const getEmailVerificationLink = async (username) => {
+  const mailinatorClient = new MailinatorClient(MAILINATOR_TOKEN);
 
-  const {result} = await mailinatorClient.request(
+  const { result } = await mailinatorClient.request(
     new GetInboxRequest(MAILINATOR_DOMAIN, username)
-  )
+  );
 
   if (result.msgs.length === 0) {
-    throw new Error("Couldn't find the email")
+    throw new Error("Couldn't find the email");
   }
 
-  const msgId = result.msgs[0].id
+  const msgId = result.msgs[0].id;
 
   const res = await mailinatorClient.request(
-    new GetMessageRequest('team769733.testinator.com', msgId)
-  )
-  const resultBody = res.result.parts[0].body
+    new GetMessageRequest("team769733.testinator.com", msgId)
+  );
+  const resultBody = res.result.parts[0].body;
+  console.log("resultBody", resultBody);
+
   const match = resultBody.match(
-    /https:\/\/app\.userflowtoolz\.com\/email-registration\/[0-9a-fA-F-]{36}/
-  )
+    /https:\/\/userflowtoolz\.com\/app\/email-registration\/([0-9a-fA-F-]{36})/
+  );
+
   if (!match) {
-    throw new Error("Couldn't find the email registration link")
+    throw new Error("Couldn't find the email registration link");
   }
-  return match[0]
-}
+  return match[0];
+};
