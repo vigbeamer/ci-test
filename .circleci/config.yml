@@ -3,10 +3,8 @@ workflows:
   test-deploy:
     jobs:
       - test
-jobs:
-  test:
-    docker:
-      - image: mcr.microsoft.com/playwright:v1.46.0-jammy
+commands:
+  e2e_test:
     steps:
       - checkout
       - run:
@@ -21,3 +19,10 @@ jobs:
           working_directory: e2e
           name: Run e2e
           command: npx playwright test
+
+jobs:
+  test:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.46.0-jammy
+    steps:
+      - e2e_test
