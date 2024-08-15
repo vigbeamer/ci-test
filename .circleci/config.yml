@@ -19,6 +19,9 @@ commands:
           working_directory: e2e
           name: Run e2e
           command: npx playwright test
+      - store_artifacts:
+        path: test-results
+        destination: playwright-test-results
 
 jobs:
   test:
