@@ -20,8 +20,7 @@ commands:
           name: Run e2e
           command: npx playwright test
       - store_artifacts:
-          working_directory: e2e
-          path: test-results
+          path: e2e/playwright-report
           destination: playwright-test-results
 
 jobs:
