@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  slack: circleci/slack@4.9.3
+
 workflows:
   test-deploy:
     jobs:
@@ -40,6 +44,12 @@ commands:
       - store_artifacts:
           path: e2e/playwright-report
           destination: playwright-test-results
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
 
 jobs:
   test:
