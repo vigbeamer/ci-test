@@ -9,11 +9,11 @@ commands:
       - checkout
       - run:
           working_directory: crx/src
-          name: Install chrome extension deps
-          commmand: npm install
+          name: Install crx deps
+          command: npm install
       - run:
           working_directory: crx/src
-          name: Prepare chrome extension
+          name: Prepare crx
           command: npm run prod
       - run:
           working_directory: e2e
