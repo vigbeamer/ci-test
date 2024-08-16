@@ -8,6 +8,14 @@ commands:
     steps:
       - checkout
       - run:
+          working_directory: crx/src
+          name: Install chrome extension deps
+          commmand: npm install
+      - run:
+          working_directory: crx/src
+          name: Prepare chrome extension
+          command: npm run prod
+      - run:
           working_directory: e2e
           name: Install dependencies
           command: npm install
