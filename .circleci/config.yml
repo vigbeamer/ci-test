@@ -17,6 +17,14 @@ commands:
   e2e_test:
     steps:
       - checkout
+      # - run:
+      #     working_directory: crx/src
+      #     name: Install crx deps
+      #     command: npm install
+      # - run:
+      #     working_directory: crx/src
+      #     name: Prepare crx
+      #     command: npm run prod
       - run:
           working_directory: e2e
           name: Install dependencies
