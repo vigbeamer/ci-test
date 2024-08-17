@@ -54,17 +54,30 @@ commands:
           template: basic_success_1
           custom: |
             {
-              "accessory": {
-                  "type": "button",
+              "text": "${CIRCLE_BRANCH}: ${CIRCLE_JOB} failed",
+              "blocks": [
+                {
+                  "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "Generated e2e test reports",
+                    "text": ":red_circle: ${CIRCLE_BRANCH}: ${CIRCLE_JOB} failed",
                     "emoji": true
-                  },
-                  "value": "View reports",
-                  "url": "<{{ build_url }}/artifacts/0/playwright-test-results",
-                  "action_id": "button-action"
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View job"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}/artifacts/0/playwright-test-results"
+                    }
+                  ]
                 }
+              ]
             }
 
 jobs:
