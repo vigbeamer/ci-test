@@ -73,7 +73,7 @@ commands:
                         "type": "plain_text",
                         "text": "View job"
                       },
-                      "url": "${CIRCLE_BUILD_URL}/artifacts/0/playwright-test-results"
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
                     }
                   ]
                 }
