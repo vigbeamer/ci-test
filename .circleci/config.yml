@@ -54,15 +54,17 @@ commands:
           template: basic_success_1
           custom: |
             {
-              "attachments": [
-                {
-                  "fallback": "Job <{{ build_url}}|#{{ build_num}}> passed",
-                  "fields": [
-                    { "title": "Job ID", "value": "{{ CIRCLE_JOB }}", "short": true },
-                    { "title": "Artifact", "value": "<{{ build_url }}/artifacts/0/playwright-test-results|Test Results>", "short": true }
-                  ]
+              "accessory": {
+                  "type": "button",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Generated e2e test reports",
+                    "emoji": true
+                  },
+                  "value": "View reports",
+                  "url": "<{{ build_url }}/artifacts/0/playwright-test-results",
+                  "action_id": "button-action"
                 }
-              ]
             }
 
 jobs:
