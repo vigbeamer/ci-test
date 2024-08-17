@@ -49,9 +49,6 @@ commands:
       - slack/notify:
           event: fail
           template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
           custom: |
             {
               "text": "${CIRCLE_BRANCH}: ${CIRCLE_JOB} failed",
@@ -60,7 +57,7 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":red_circle: ${CIRCLE_BRANCH}: ${CIRCLE_JOB} failed",
+                    "text": ":x: ${CIRCLE_BRANCH}: ${CIRCLE_JOB} failed",
                     "emoji": true
                   }
                 },
@@ -71,7 +68,37 @@ commands:
                       "type": "button",
                       "text": {
                         "type": "plain_text",
-                        "text": "View job"
+                        "text": "View report"
+                      },
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
+                    }
+                  ]
+                }
+              ]
+            }
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+          custom: |
+            {
+              "text": "${CIRCLE_BRANCH}: ${CIRCLE_JOB} passed",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ":rocket: ${CIRCLE_BRANCH}: ${CIRCLE_JOB} passed",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View report"
                       },
                       "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
                     }
