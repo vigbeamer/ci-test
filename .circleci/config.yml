@@ -12,7 +12,7 @@ workflows:
   genereate-e2e-report:
     triggers:
       - schedule:
-          cron: "17 8 * * *"
+          cron: "23 8 * * *"
           filters:
             branches:
               only:
@@ -70,22 +70,10 @@ commands:
             {
               "attachments": [
                 {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": ":rocket: ${CIRCLE_BRANCH}: ${CIRCLE_JOB} passed",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "actions",
-                  "elements": [
+                  "actions": [
                     {
                       "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View report"
-                      },
+                      "text": "View Test Results",
                       "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
                     }
                   ]
