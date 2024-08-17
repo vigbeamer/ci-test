@@ -6,7 +6,9 @@ orbs:
 workflows:
   test-deploy:
     jobs:
-      - test
+      - test:
+          context:
+            - slack-ci
   genereate-e2e-report:
     triggers:
       - schedule:
