@@ -12,7 +12,7 @@ workflows:
   genereate-e2e-report:
     triggers:
       - schedule:
-          cron: "0 9 * * *"
+          cron: "18 1 * * *"
           filters:
             branches:
               only:
