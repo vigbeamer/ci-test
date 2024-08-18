@@ -55,9 +55,10 @@ commands:
       - store_artifacts:
           path: e2e/playwright-report
           destination: playwright-test-results
-       - run:
-          name: Save Artifact URL
-          command: echo "export E2E_ARTIFACT_URL=https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - playwright-test-results
 
 jobs:
   test:
@@ -81,7 +82,7 @@ jobs:
                     {
                       "type": "button",
                       "text": "View Test Results",
-                      "url": $E2E_ARTIFACT_URL
+                      "url":  "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/test-results/index.html"
                     }
                   ]
                 }
@@ -103,7 +104,7 @@ jobs:
                     {
                       "type": "button",
                       "text": "View Test Results",
-                      "url": $E2E_ARTIFACT_URL
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/test-results/index.html"
                     }
                   ]
                 }
