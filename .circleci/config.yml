@@ -6,7 +6,7 @@ orbs:
 workflows:
   test-deploy:
     jobs:
-      - test:
+      - test
       - notify-e2e-fail:
           requires:
             - test
@@ -17,7 +17,6 @@ workflows:
             - test
           context:
             - slack-ci
-
   genereate-e2e-report:
     triggers:
       - schedule:
@@ -26,6 +25,8 @@ workflows:
             branches:
               only:
                 - main
+    jobs:
+      - test
 
 commands:
   e2e_test:
