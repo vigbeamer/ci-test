@@ -67,7 +67,7 @@ commands:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Build Number :*\n ${CIRCLE_BUILD_NUM}"
+                      "text": "*Status Number :*\n ${CIRCLE_BUILD_STATUS}"
                     }
                   ]
                 },
