@@ -57,7 +57,7 @@ commands:
           destination: playwright-test-results
       - persist_to_workspace:
           root: .
-          paths: -e2e/playwright-test-results
+          paths: e2e/playwright-test-results
 jobs:
   test:
     docker:
