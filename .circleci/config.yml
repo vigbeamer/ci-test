@@ -55,7 +55,7 @@ commands:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
+                    "text": "*E2E reports have been generated*\n*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
                   }
                 },
                 {
@@ -67,7 +67,7 @@ commands:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Status Number :*\n ${CIRCLE_BUILD_STATUS}"
+                      "text": "*Build Number :*\n ${CIRCLE_BUILD_NUM}"
                     }
                   ]
                 },
@@ -75,7 +75,7 @@ commands:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Playwright test reports are available"
+                    "text": "Test reports"
                   },
                   "accessory": {
                     "type": "button",
