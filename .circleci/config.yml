@@ -58,8 +58,7 @@ commands:
       - persist_to_workspace:
           root: .
           paths:
-            - playwright-test-results
-
+            - e2e/playwright-report
 jobs:
   test:
     docker:
