@@ -50,18 +50,44 @@ commands:
           event: always
           custom: |
             {
-              "text": "Test results are available.",
-              "attachments": [
+              "blocks": [
                 {
-                  "fallback": "View the test results using the button below.",
-                  "color": "#36a64f",
-                  "actions": [
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Build Status: *${CIRCLE_BUILD_STATUS == 'success' ? '✅ Passed' : '❌ Failed'}*:\n*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
                     {
-                      "type": "button",
-                      "text": "View Test Results",
-                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
+                      "type": "mrkdwn",
+                      "text": "*Job ID :*\n ${CIRCLE_JOB}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Build Number :*\n ${CIRCLE_BUILD_NUM}"
                     }
                   ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Playwright test reports are available"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View",
+                      "emoji": true
+                    },
+                    "value": "View",
+                    "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html",
+                    "action_id": "View reports"
+                  }
                 }
               ]
             }
