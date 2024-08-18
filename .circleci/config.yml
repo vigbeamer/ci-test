@@ -50,6 +50,7 @@ commands:
           event: always
           custom: |
             {
+              "text": "Test results are available.",
               "attachments": [
                 {
                   "actions": [
