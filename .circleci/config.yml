@@ -53,6 +53,8 @@ commands:
               "text": "Test results are available.",
               "attachments": [
                 {
+                  "fallback": "View the test results using the button below.",
+                  "color": "#36a64f",
                   "actions": [
                     {
                       "type": "button",
