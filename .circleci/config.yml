@@ -55,7 +55,7 @@ commands:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Build Status: *${CIRCLE_BUILD_STATUS == 'success' ? '✅ Passed' : '❌ Failed'}*:\n*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
+                    "text": "*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
                   }
                 },
                 {
