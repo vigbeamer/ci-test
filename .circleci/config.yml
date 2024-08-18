@@ -19,6 +19,13 @@ workflows:
                 - main
     jobs:
       - test
+      - notify-e2e-fail:
+          requires:
+            - test
+      - notify-e2e-pass:
+          requires:
+            - test
+
 commands:
   e2e_test:
     steps:
@@ -46,40 +53,6 @@ commands:
       - store_artifacts:
           path: e2e/playwright-report
           destination: playwright-test-results
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-          custom: |
-            {
-              "attachments": [
-                {
-                  "actions": [
-                    {
-                      "type": "button",
-                      "text": "View Test Results",
-                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
-                    }
-                  ]
-                }
-              ]
-            }
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          custom: |
-            {
-              "attachments": [
-                {
-                  "actions": [
-                    {
-                      "type": "button",
-                      "text": "View Test Results",
-                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
-                    }
-                  ]
-                }
-              ]
-            }
 
 jobs:
   test:
@@ -87,3 +60,47 @@ jobs:
       - image: mcr.microsoft.com/playwright:v1.46.0-jammy
     steps:
       - e2e_test
+  notify-e2e-fail:
+    docker:
+      - image: circleci/node:16
+    steps:
+      - slack/notify:
+          event: fail
+          custom: |
+            {
+              "attachments": [
+                {
+                  "color": "danger",
+                  "text": "Job failed. Check the test results.",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View Test Results",
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
+                    }
+                  ]
+                }
+              ]
+            }
+  notify-e2e-pass:
+    docker:
+      - image: circleci/node:16
+    steps:
+      - slack/notify:
+          event: pass
+          custom: |
+            {
+              "attachments": [
+                {
+                  "color": "good",
+                  "text": "Job passed. Check the test results.",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View Test Results",
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html"
+                    }
+                  ]
+                }
+              ]
+            }
