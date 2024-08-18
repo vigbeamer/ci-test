@@ -7,8 +7,17 @@ workflows:
   test-deploy:
     jobs:
       - test:
+      - notify-e2e-fail:
+          requires:
+            - test
           context:
             - slack-ci
+      - notify-e2e-pass:
+          requires:
+            - test
+          context:
+            - slack-ci
+
   genereate-e2e-report:
     triggers:
       - schedule:
@@ -17,14 +26,6 @@ workflows:
             branches:
               only:
                 - main
-    jobs:
-      - test
-      - notify-e2e-fail:
-          requires:
-            - test
-      - notify-e2e-pass:
-          requires:
-            - test
 
 commands:
   e2e_test:
