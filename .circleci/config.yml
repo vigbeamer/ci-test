@@ -53,10 +53,11 @@ commands:
             STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
             read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS \<<< "$STATS"
             TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS + SKIPPED_TESTS))
-                  if [ "$FAILED_TESTS" -gt 0]; then
+                  if ["$FAILED_TESTS" -gt 0 ]; then
                         STATUS_MESSAGE=":x: Failed"
                   else
                         STATUS_MESSAGE=":white_check_mark: Success"
+                  fi
             echo "export STATUS_MESSAGE=$STATUS_MESSAGE
                   export PASSED_TESTS=$PASSED_TESTS
                   export FAILED_TESTS=$FAILED_TESTS
