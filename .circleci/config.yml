@@ -96,19 +96,19 @@ commands:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*Passed :*\n ${PASSED_TESTS}"
+                      "text": "*Passed :*\n ${PASSED_TESTS:-0}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Failed :*\n ${FAILED_TESTS}"
+                      "text": "*Failed :*\n ${FAILED_TESTS:-0}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Flaky :*\n ${FLAKY_TESTS}"
+                      "text": "*Flaky :*\n ${FLAKY_TESTS:-0}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Skipped :*\n ${SKIPPED_TESTS}"
+                      "text": "*Skipped :*\n ${SKIPPED_TESTS:-0}"
                     }
                   ]
                 },
