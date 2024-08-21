@@ -1,0 +1,712 @@
+{
+  "info": {
+    "_postman_id": "d897ad4f-9340-4947-b454-024d379eaf6f",
+    "name": "Userflow API Reference",
+    "description": "With the [Userflow](https://userflow.com/) REST API you can synchronize your user data with Userflow, and track events directly from your back-end application.\n\nThe API is based on [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Its URLs are resource-oriented and it uses the standard HTTP verbs (`GET`, `POST` etc.). It receives and responds with JSON. It responds with standard HTTP response codes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33133609"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/users",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List users with search params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/users?type=attribute&attribute_name=email&operator=eq&value=chandler@gmail.com",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "attribute"
+                },
+                {
+                  "key": "attribute_name",
+                  "value": "email"
+                },
+                {
+                  "key": "operator",
+                  "value": "eq"
+                },
+                {
+                  "key": "value",
+                  "value": "chandler@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/users/7",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users", "7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create or update a user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\":3,\n    \"attributes\":{\n        \"name\":\"Phoebe\",\n        \"email\":\"phoebe@gmail.com\",\n        \"signed_up_at\":\"2024-03-11T12:22:54.429+00:00\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/users",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create or update a user with membership",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"12\",\n    \"attributes\": {\n        \"email\": \"yannis@coko.foundation.com\",\n        \"name\": \"Yannis\"\n    },\n    \"memberships\": [\n        {\n            \"group\": {\n                \"id\": \"1\"\n            }\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/users?expand=memberships.group",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "expand",
+                  "value": "memberships.group"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a user",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/users/9",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users", "9"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Users are the people using your application. Userflow keeps track of your users, so we can determine which flows to show them, and remember which flows they've already seen.\n\nYour application can either register users with Userflow and update their attributes on the client-side using Userflow.js'  [&nbsp;<code>userflow.identify()</code>](https://userflow.com/docs/userflow-js#identify) method, or directly from your back-end using this API.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groups/companies",
+      "item": [
+        {
+          "name": "Create a group",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\":\"6337718273\",\n    \"attributes\":{\n        \"name\":\"Coko\"\n        \n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/groups",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["groups"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a group",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/groups/1",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["groups", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a group",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\":\"3\",\n    \"attributes\":{\n        \"name\":\"billy's club\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/groups",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["groups"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a group",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/groups/2",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["groups", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List groups",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/groups/",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["groups", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Groups are used to group multiple users together. In your business, groups may correspond to e.g. companies, teams or departments.\n\nLike users, groups can have attributes. Events can also be associated with groups.\n\nWith groups, you can orchestrate the flows a user sees:\n\n- ...based on behavior of other users in a group. Example: Show a flow if no one in a group has created a \"widget\" yet.\n    \n- ...based on multiple groups that the user is a member of. Example: Show a flow if the group the user is currently working on matches some condition.\n    \n\nNote that the Groups feature is only available in certain plans. Check your [Billing page](https://userflow.com/app/_/settings/billing) or [reach out to us to ask](https://mailto:support@userflow.com)."
+    },
+    {
+      "name": "Group memberships",
+      "item": [
+        {
+          "name": "List group memberships",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/groups?expand=memberships.group",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["groups"],
+              "query": [
+                {
+                  "key": "expand",
+                  "value": "memberships.group"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create user with memberships",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"7\",\n    \"attributes\": {\n        \"name\": \"chandler\",\n        \"email\": \"chanfler@yahoo.com\"\n    },\n    \"memberships\": [\n        {\n            \"id\": \"4\",\n            \"attributes\": {\n                \"role\": \"admin\"\n            },\n            \"group\":{\n            \"id\":2\n            }\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/users?expand=memberships.group",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "expand",
+                  "value": "memberships.group"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user group prune",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"7\",\n    \"attributes\": {\n        \"name\": \"chandler\",\n        \"email\": \"chanfler@yahoo.com\"\n    },\n    \"memberships\": [\n        {\n            \"id\": \"4\",\n            \"attributes\": {\n                \"role\": \"admin\"\n            },\n            \"group\":{\n            \"id\":2\n            }\n        }\n    ],\n    \"prune_membership\":true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/users",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove a user from a group",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/group_memberships?user_id=6&group_id=1",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["group_memberships"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "6"
+                },
+                {
+                  "key": "group_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add user to group",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"7\",\n    \"memberships\": [\n        {\n            \"id\": \"4\",\n            \"attributes\": {\n                \"role\": \"admin\"\n            },\n            \"group\": {\n                \"id\": 1\n            }\n        }\n    ],\n    \"prune_memberships\":true\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/users?expand=memberships.group",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "expand",
+                  "value": "memberships.group"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Group memberships represent the many-to-many association between users and groups. One user can be a member of multiple groups. One group can have multiple users as members.\n\nMemberships can hold attributes related to the user's role in a specific group. One user may be the Owner of one group and an Admin of another group. One group can have both an Owner and an Admin. You can't put the user's role in either the user's attributes or the group's attributes. Instead, you put it in the membership's attributes."
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Track an event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "//  \n\n{\n    \"name\":\"serves_muffin\",\n    \"group_id\":1,\n    \"attributes\":{\n        \"type\":\"fruit_muffin\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/events",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["events"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "You can track events for users and groups for analytics purposes or to segment and personalize your flows.\n\nEvents can be either associated with just a user, just a group, or both a user and a group."
+    },
+    {
+      "name": "Content",
+      "item": [
+        {
+          "name": "Get a content object",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/content/775b6a99-32ab-46e7-9aad-6e08652b80c7",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["content", "775b6a99-32ab-46e7-9aad-6e08652b80c7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List content",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/content?expand=draft_version",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["content"],
+              "query": [
+                {
+                  "key": "expand",
+                  "value": "draft_version"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Content is a common term for flows, checklists and launchers.\n\nNote that content is versioned. The actual _contents_ of content objects are found in [content versions](https://userflow.com/docs/api#content-versions)."
+    },
+    {
+      "name": "Content versions",
+      "item": [
+        {
+          "name": "List content versions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/content_versions?content_id=775b6a99-32ab-46e7-9aad-6e08652b80c7",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["content_versions"],
+              "query": [
+                {
+                  "key": "content_id",
+                  "value": "775b6a99-32ab-46e7-9aad-6e08652b80c7"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a content version",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/content_versions/27560083-fe52-4ebf-b799-1e22ee45243a",
+              "host": ["{{userflow_api_url}}"],
+              "path": [
+                "content_versions",
+                "27560083-fe52-4ebf-b799-1e22ee45243a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Content (flows, checklists and launchers) is versioned. A new version is automatically created by Userflow when new edits are made and when publishing content."
+    },
+    {
+      "name": "Content sessions",
+      "item": [
+        {
+          "name": "List content sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/content_sessions?content_id=775b6a99-32ab-46e7-9aad-6e08652b80c7",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["content_sessions"],
+              "query": [
+                {
+                  "key": "content_id",
+                  "value": "775b6a99-32ab-46e7-9aad-6e08652b80c7"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a content session",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/content_sessions/27560083-fe52-4ebf-b799-1e22ee45243a",
+              "host": ["{{userflow_api_url}}"],
+              "path": [
+                "content_sessions",
+                "27560083-fe52-4ebf-b799-1e22ee45243a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "A session is a specific user's journey through a specific content object (flow, checklist or launcher). It tracks their progress and records survey answers they provide."
+    },
+    {
+      "name": "Attribute definitions",
+      "item": [
+        {
+          "name": "List attribute definitions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/attribute_definitions?limit=100",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["attribute_definitions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "You can associate any attributes with users/events that you want. Userflow keeps track of all the attributes you use through attribute definitions.\n\nAttribute definitions are automatically created when you send new attributes not seen by Userflow before. It's currently not possible to create/update/delete attribute definitions through this API."
+    },
+    {
+      "name": "Event definitions",
+      "item": [
+        {
+          "name": "List event definitions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/event_definitions?limit=100",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["event_definitions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "You can track any custom event with Userflow that you want. Userflow keeps track of all the events you use through event definitions.\n\nEvent definitions are automatically created when you track new events not seen by Userflow before. It's currently not possible to create/update/delete attribute definitions through this API."
+    },
+    {
+      "name": "Webhook subscriptions",
+      "item": [
+        {
+          "name": "Create a webhook subscription",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n        \"api_version\": \"2020-01-03\",\n        \"url\": \"https://example.com/hooks/userflow\",\n        \"topics\": [\"user\", \"event\"]\n      }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/webhook_subscriptions",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["webhook_subscriptions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a webhook subscription",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n        \"api_version\": \"2020-01-03\",\n        \"url\": \"https://example.com/hooks/userflow\",\n        \"topics\": [\"user\", \"event\"],\n        \"disabled\": true\n      }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userflow_api_url}}/webhook_subscriptions/8c96e4e6-1af8-4a9e-a6d8-4f495500da67",
+              "host": ["{{userflow_api_url}}"],
+              "path": [
+                "webhook_subscriptions",
+                "8c96e4e6-1af8-4a9e-a6d8-4f495500da67"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a webhook subscription",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/webhook_subscriptions/8c96e4e6-1af8-4a9e-a6d8-4f495500da67",
+              "host": ["{{userflow_api_url}}"],
+              "path": [
+                "webhook_subscriptions",
+                "8c96e4e6-1af8-4a9e-a6d8-4f495500da67"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List webhook subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/webhook_subscriptions",
+              "host": ["{{userflow_api_url}}"],
+              "path": ["webhook_subscriptions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a webhook subscription Copy",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{userflow_api_url}}/webhook_subscriptions/8c96e4e6-1af8-4a9e-a6d8-4f495500da67",
+              "host": ["{{userflow_api_url}}"],
+              "path": [
+                "webhook_subscriptions",
+                "8c96e4e6-1af8-4a9e-a6d8-4f495500da67"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "You can create webhook subscriptions to be notified when certain events happen in your Userflow account.\n\nWhen e.g. a user is created or a user event is tracked, Userflow will send a `POST` request to a URL of your choosing. Often this URL would hit your own servers, so your back-end can react to the webhook."
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{userflow_api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "userflow_api_key",
+      "value": "ak_rkih66urqnfshcolew3lmogaau",
+      "type": "string"
+    },
+    {
+      "key": "userflow_api_url",
+      "value": "https://api.staging.userflowtoolz.com",
+      "type": "string"
+    }
+  ]
+}

@@ -42,11 +42,23 @@ commands:
       - run:
           working_directory: e2e
           name: Run e2e
-          command: npx playwright test
+          command: npx playwright test --reporter=json > test-results.json
+      - run:
+          name: Extract stats for notification
+          command: |
+            STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
+            read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS <<< "$STATS"
+            TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS + SKIPPED_TESTS))
+            echo "export PASSED_TESTS=$PASSED_TESTS
+                  export FAILED_TESTS=$FAILED_TESTS
+                  export FLAKY_TESTS=$FLAKY_TESTS
+                  export SKIPPED_TESTS=$SKIPPED_TESTS" >> $BASH_ENV
+
       - store_artifacts:
           path: e2e/playwright-report
           destination: playwright-test-results
       - slack/notify:
+          channel: ci-notif
           event: always
           custom: |
             {
@@ -55,7 +67,7 @@ commands:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*E2E reports have been generated*\n*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
+                    "text": "*:test_tube: E2E reports have been generated*\n*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
                   }
                 },
                 {
@@ -72,16 +84,42 @@ commands:
                   ]
                 },
                 {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Test results*"
+                  },
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Passed :*\n ${PASSED_TESTS}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Failed :*\n ${FAILED_TESTS}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Flaky :*\n ${FLAKY_TESTS}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Skipped :*\n ${SKIPPED_TESTS}"
+                    }
+                  ]
+                },
+                {
                   "type": "actions",
                   "elements": [
                     {
                       "type": "button",
+                      "style": "primary",
                       "text": {
                         "type": "plain_text",
-                        "text": "View",
+                        "text": "View report",
                         "emoji": true
                       },
-                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-results/index.html",
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-report/index.html",
                       "action_id": "view_reports"
                     }
                   ]
