@@ -47,6 +47,7 @@ commands:
           name: Install jq
           command: apt-get update && apt-get install -y jq
       - run:
+          working_directory: e2e
           name: Extract stats for notification
           command: |
             STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
