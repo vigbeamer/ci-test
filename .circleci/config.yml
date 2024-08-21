@@ -54,9 +54,9 @@ commands:
             read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS \<<< "$STATS"
             TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS + SKIPPED_TESTS))
                   if [ "$FAILED_TESTS" -gt 0 ]; then
-                        STATUS_MESSAGE=":Failed:x:"
+                        STATUS_MESSAGE=":x:"
                   else
-                        STATUS_MESSAGE="Passed:white_check_mark:"
+                        STATUS_MESSAGE=":white_check_mark:"
                   fi
             echo "export STATUS_MESSAGE=$STATUS_MESSAGE
                   export PASSED_TESTS=$PASSED_TESTS
