@@ -44,6 +44,9 @@ commands:
           name: Run e2e
           command: npx playwright test --reporter=json > test-results.json
       - run:
+          name: Install jq
+          command: sudo apt-get update && sudo apt-get install -y jq
+      - run:
           name: Extract stats for notification
           command: |
             STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
