@@ -51,9 +51,14 @@ commands:
           name: Extract stats for notification
           command: |
             STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
-            read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS \<<< "$STATS"
+            read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS <<< "$STATS"
             TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS + SKIPPED_TESTS))
-            echo "export PASSED_TESTS=$PASSED_TESTS
+                  if [ "$FAILED_TESTS" -gt 0]; then
+                        STATUS_MESSAGE=":x: Failed"
+                  else
+                        STATUS_MESSAGE=":white_check_mark: Success"
+            echo "export STATUS_MESSAGE=$STATUS_MESSAGE
+                  export PASSED_TESTS=$PASSED_TESTS
                   export FAILED_TESTS=$FAILED_TESTS
                   export FLAKY_TESTS=$FLAKY_TESTS
                   export SKIPPED_TESTS=$SKIPPED_TESTS" >> $BASH_ENV
@@ -72,6 +77,13 @@ commands:
                   "text": {
                     "type": "mrkdwn",
                     "text": "*:test_tube: E2E reports have been generated*\n*<${CIRCLE_BUILD_URL}|CircleCI Job #${CIRCLE_BUILD_NUM}>*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*${STATUS_MESSAGE}*"
                   }
                 },
                 {
