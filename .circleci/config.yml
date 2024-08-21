@@ -51,7 +51,7 @@ commands:
           name: Extract stats for notification
           command: |
             STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
-            read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS <<< "$STATS"
+            read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS \<<< "$STATS"
             TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS + SKIPPED_TESTS))
                   if [ "$FAILED_TESTS" -gt 0]; then
                         STATUS_MESSAGE=":x: Failed"
