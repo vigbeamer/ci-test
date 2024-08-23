@@ -42,7 +42,7 @@ commands:
       - run:
           working_directory: e2e
           name: Run e2e
-          command: npx playwright test --reporter=json > test-results.json
+          command: npx playwright test
       - run:
           name: Install jq
           command: apt-get update && apt-get install -y jq
