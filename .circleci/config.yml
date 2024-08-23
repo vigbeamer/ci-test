@@ -65,7 +65,7 @@ commands:
 
       - store_artifacts:
           path: e2e/playwright-report
-          destination: playwright-test-results
+          destination: playwright-report
       - slack/notify:
           channel: ci-notif
           event: always
@@ -135,7 +135,7 @@ commands:
                         "text": "View report",
                         "emoji": true
                       },
-                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-report/index.html",
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-report/index.html",
                       "action_id": "view_reports"
                     }
                   ]
