@@ -50,9 +50,8 @@ commands:
           working_directory: e2e
           name: Extract stats for notification
           command: |
-            STATS=$(jq '.stats.expected,.stats.unexpected,.status.flaky,.stats.skipped' test-results.json)
-            read -r PASSED_TESTS FAILED_TESTS SKIPPED_TESTS \<<< "$STATS"
-            TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS + SKIPPED_TESTS))
+            STATS=$(jq -r '[.stats.expected, .stats.unexpected, .status.flaky, .stats.skipped] | @tsv' test-results.json)
+            read -r PASSED_TESTS FAILED_TESTS FLAKY_TESTS SKIPPED_TESTS <<< "$STATS"
                   if [ "$FAILED_TESTS" -gt 0 ]; then
                         STATUS_MESSAGE=":x:"
                   else
