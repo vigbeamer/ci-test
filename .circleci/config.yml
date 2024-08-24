@@ -9,6 +9,12 @@ workflows:
       - test:
           context:
             - slack-ci
+      - extract-e2e-results:
+          requires:
+            - test
+      - send-e2e-results:
+          requires:
+            - extract-e2e-results
   genereate-e2e-report:
     triggers:
       - schedule:
@@ -21,6 +27,12 @@ workflows:
       - test:
           context:
             - slack-ci
+      - extract-e2e-results:
+          requires:
+            - test
+      - send-e2e-results:
+          requires:
+            - extract-e2e-results
 commands:
   e2e_test:
     steps:
@@ -45,6 +57,13 @@ commands:
           working_directory: e2e
           name: Run e2e
           command: npx playwright test
+
+      - store_artifacts:
+          path: e2e/playwright-report
+          destination: playwright-report
+
+  extract-e2e-results:
+    steps:
       - run:
           name: Install jq
           command: apt-get update && apt-get install -y jq
@@ -65,13 +84,10 @@ commands:
                   export FAILED_TESTS=$FAILED_TESTS
                   export FLAKY_TESTS=$FLAKY_TESTS
                   export SKIPPED_TESTS=$SKIPPED_TESTS" >> $BASH_ENV
-
-      - store_artifacts:
-          path: e2e/playwright-report
-          destination: playwright-report
+  send-e2e-results:
+    steps:
       - slack/notify:
           channel: ci-notif
-          event: always
           custom: |
             {
               "blocks": [
@@ -152,3 +168,13 @@ jobs:
       - image: mcr.microsoft.com/playwright:v1.46.0-jammy
     steps:
       - e2e_test
+  extract-e2e-results:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - extract-e2e-results
+  send-e2e-results:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - send-e2e-results
