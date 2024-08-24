@@ -18,7 +18,9 @@ workflows:
               only:
                 - main
     jobs:
-      - test
+      - test:
+          context:
+            - slack-ci
 commands:
   e2e_test:
     steps:
