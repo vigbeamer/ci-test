@@ -12,10 +12,17 @@ workflows:
       - extract-e2e-results:
           requires:
             - test
-          when: always
+          filters:
+            branches:
+              only:
+                - main
       - send-e2e-results:
           requires:
             - extract-e2e-results
+          filters:
+            branches:
+              only:
+                - main
   genereate-e2e-report:
     triggers:
       - schedule:
@@ -31,7 +38,6 @@ workflows:
       - extract-e2e-results:
           requires:
             - test
-          when: always
       - send-e2e-results:
           requires:
             - extract-e2e-results
