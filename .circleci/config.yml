@@ -12,6 +12,7 @@ workflows:
       - extract-e2e-results:
           requires:
             - test
+          when: always
       - send-e2e-results:
           requires:
             - extract-e2e-results
@@ -30,6 +31,7 @@ workflows:
       - extract-e2e-results:
           requires:
             - test
+          when: always
       - send-e2e-results:
           requires:
             - extract-e2e-results
