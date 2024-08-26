@@ -3,7 +3,6 @@ import { appendFileSync } from "fs";
 class CustomReporter implements Reporter {
   private stats;
   constructor() {
-    console.log("hererereeeee");
     this.stats = {
       passed: 0,
       failed: 0,
@@ -36,10 +35,10 @@ class CustomReporter implements Reporter {
     const STATUS_MESSAGE = this.stats.failed > 0 ? ":x:" : ":white_check_mark";
     const exportString = `
     export PASSED_TESTS=${this.stats.passed}
-    export FAILED_TESTS=${this.stats.passed}
-    export TIMEDOUT_TESTS=${this.stats.passed}
-    export SKIPPED_TESTS=${this.stats.passed}
-    export INTERRUPTED_TESTS=${this.stats.passed}
+    export FAILED_TESTS=${this.stats.failed}
+    export TIMEDOUT_TESTS=${this.stats.timedOut}
+    export SKIPPED_TESTS=${this.stats.skipped}
+    export INTERRUPTED_TESTS=${this.stats.interrupted}
     export STATUS_MESSAGE=${STATUS_MESSAGE}
     `;
     appendFileSync(bashEnv, exportString);
