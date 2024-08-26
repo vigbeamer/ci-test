@@ -42,13 +42,12 @@ export default class AuthPages {
 
     const isDev = process.env.IS_DEV;
 
-    // fetch the email registration link from Mailinator for production mode
     let actionUrl;
 
     if (!isDev) {
+      // fetch the email registration link from Mailinator for production mode
       await this.page.waitForTimeout(4000);
       actionUrl = await getEmailVerificationLink(name);
-      //
     } else {
       // fetch action url in dev mode
       await this.page.goto(MAILBOX_ROUTE);

@@ -6,14 +6,12 @@ import { clearInbox } from "@/utils/mailinator";
 
 const { name, companyName, password } = user1;
 const IS_DEV = process.env.IS_DEV;
-console.log("hereee2");
 
 test.afterAll(async () => {
   await clearInbox(name);
 });
 
 test("Create User", async ({ page, authPages }) => {
-  console.log("hereee");
   await authPages.gotoCreateAccount();
   await authPages.createAccount(
     `${name}@${MAILINATOR_DOMAIN}`,
