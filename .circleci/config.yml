@@ -9,20 +9,7 @@ workflows:
       - test:
           context:
             - slack-ci
-      - extract-e2e-results:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - main
-      - send-e2e-results:
-          requires:
-            - extract-e2e-results
-          filters:
-            branches:
-              only:
-                - main
+
   genereate-e2e-report:
     triggers:
       - schedule:
@@ -35,24 +22,10 @@ workflows:
       - test:
           context:
             - slack-ci
-      - extract-e2e-results:
-          requires:
-            - test
-      - send-e2e-results:
-          requires:
-            - extract-e2e-results
 commands:
-  e2e_test:
+  e2e_tests:
     steps:
       - checkout
-      # - run:
-      #     working_directory: crx/src
-      #     name: Install crx deps
-      #     command: npm install
-      # - run:
-      #     working_directory: crx/src
-      #     name: Prepare crx
-      #     command: npm run prod
       - run:
           working_directory: e2e
           name: Install dependencies
@@ -63,39 +36,33 @@ commands:
           command: npx playwright install
       - run:
           working_directory: e2e
-          name: Run e2e
+          name: Run tests
           command: npx playwright test
-
+      # - run:
+      #     name: Install jq
+      #     command: apt-get update && apt-get install -y jq
+      # - run:
+      #     working_directory: e2e
+      #     name: Extract stats for notification
+      #     command: |
+      #       STATS=$(jq -r '[.stats.expected, .stats.unexpected, .status.flaky, .stats.skipped] | @tsv' test-results.json)
+      #       read -r PASSED_TESTS FAILED_TESTS FLAKY_TESTS SKIPPED_TESTS \<<< "$STATS"
+      #             if [ "$FAILED_TESTS" -gt 0 ]; then
+      #                   STATUS_MESSAGE=":x:"
+      #             else
+      #                   STATUS_MESSAGE=":white_check_mark:"
+      #             fi
+      #       echo "export STATUS_MESSAGE=$STATUS_MESSAGE
+      #             export PASSED_TESTS=$PASSED_TESTS
+      #             export FAILED_TESTS=$FAILED_TESTS
+      #             export FLAKY_TESTS=$FLAKY_TESTS
+      #             export SKIPPED_TESTS=$SKIPPED_TESTS" >> $BASH_ENV
       - store_artifacts:
           path: e2e/playwright-report
-          destination: playwright-report
-
-  extract-e2e-results:
-    steps:
-      - run:
-          name: Install jq
-          command: apt-get update && apt-get install -y jq
-      - run:
-          working_directory: e2e
-          name: Extract stats for notification
-          command: |
-            STATS=$(jq -r '[.stats.expected // 0, .stats.unexpected // 0, .status.flaky // 0, .stats.skipped // 0] | @tsv' test-results.json)
-            read -r PASSED_TESTS FAILED_TESTS FLAKY_TESTS SKIPPED_TESTS \<<< "$STATS"
-            echo "PASSED_TESTS=$PASSED_TESTS, FAILED_TESTS=$FAILED_TESTS, FLAKY_TESTS=$FLAKY_TESTS, SKIPPED_TESTS=$SKIPPED_TESTS"
-                  if [ "$FAILED_TESTS" -gt 0 ]; then
-                        STATUS_MESSAGE=":x:"
-                  else
-                        STATUS_MESSAGE=":white_check_mark:"
-                  fi
-            echo "export STATUS_MESSAGE=$STATUS_MESSAGE
-                  export PASSED_TESTS=$PASSED_TESTS
-                  export FAILED_TESTS=$FAILED_TESTS
-                  export FLAKY_TESTS=$FLAKY_TESTS
-                  export SKIPPED_TESTS=$SKIPPED_TESTS" >> $BASH_ENV
-  send-e2e-results:
-    steps:
+          destination: playwright-test-report
       - slack/notify:
-          channel: ci-notif
+          channel: uf-e2e-reports
+          event: always
           custom: |
             {
               "blocks": [
@@ -162,7 +129,7 @@ commands:
                         "text": "View report",
                         "emoji": true
                       },
-                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-report/index.html",
+                      "url": "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/playwright-test-report/index.html",
                       "action_id": "view_reports"
                     }
                   ]
@@ -175,14 +142,4 @@ jobs:
     docker:
       - image: mcr.microsoft.com/playwright:v1.46.0-jammy
     steps:
-      - e2e_test
-  extract-e2e-results:
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - extract-e2e-results
-  send-e2e-results:
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - send-e2e-results
+      - e2e_tests

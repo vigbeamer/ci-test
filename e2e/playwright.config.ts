@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import CustomReporter from "./utils/CustomReporter";
 
 /**
  * Read environment variables from file.
@@ -24,6 +25,7 @@ export default defineConfig({
   reporter: [
     ["html", { open: "never" }],
     ["json", { outputFile: "test-results.json" }],
+    ["./utils/CustomReporter.ts"],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
