@@ -1,28 +1,13 @@
-# e2e
+# Run tests in dev mode
 
-1. `npx playwright test` Runs the end-to-end tests.
+```bash
+  export NODE_EXTRA_CA_CERT=<absolute-path-to-ssl-cert>
+  yarn dev
+```
 
-2. `npx playwright test <spec-file-path-1> <spec-file-path-1>` Runs the specified test file alone
+Setting `NODE_EXTRA_CA_CERTS` to point to the self-signed CA certificate. It tells Node.js to trust this specific CA certificate.
 
-3. `npx playwright test -g <"title-of-the-specific-test">` runs test with the title
-
-4. `npx playwright test --ui` Starts the interactive UI mode.
-5. `npx playwright test --project=chromium` Runs the tests only on Desktop Chrome.
-
-6. `npx playwright test example` Runs the tests in a specific file. (i.e finds the spec file which has this name and runs the file)
-
-7. `npx playwright test --debug` Runs the tests in debug mode.
-
-8. `npx playwright test <spec-file-path-1> --debug` Debugs specific file
-
-9. `npx playwright test <spec-file-path-1:<line-number>> --debug` Lets you debug from a specific line number
-
-10. `npx playwright test --workers <no-of-workers` Runs the tests with specified number of workers in parallel
-
-11. `npx playwright codegen` Auto generate tests with Codegen.
-12. `npx playwright test --project=chromium --headed` runs in headed
-
-# recipe to delete all the test users
+# Recipe to delete all the test users
 
 ```elixir
 alias Userflow.Accounts.User
@@ -49,10 +34,34 @@ Repo.transaction(fn ->
 end)
 ```
 
-# recipe to delete all the test flows
+# Recipe to delete all the test flows in dev
 
 ```Elixir
    alias Userflow.Flows.Flow
    query = from f in Flow, where: f.name == "test-flow"
     Repo.delete_all(query)
 ```
+
+# Other useful playwright commands
+
+1. `npx playwright test` Runs the end-to-end tests.
+
+2. `npx playwright test <spec-file-path-1> <spec-file-path-1>` Runs the specified test file alone
+
+3. `npx playwright test -g <"title-of-the-specific-test">` runs test with the title
+
+4. `npx playwright test --ui` Starts the interactive UI mode.
+5. `npx playwright test --project=chromium` Runs the tests only on Desktop Chrome.
+
+6. `npx playwright test example` Runs the tests in a specific file. (i.e finds the spec file which has this name and runs the file)
+
+7. `npx playwright test --debug` Runs the tests in debug mode.
+
+8. `npx playwright test <spec-file-path-1> --debug` Debugs specific file
+
+9. `npx playwright test <spec-file-path-1:<line-number>> --debug` Lets you debug from a specific line number
+
+10. `npx playwright test --workers <no-of-workers` Runs the tests with specified number of workers in parallel
+
+11. `npx playwright codegen` Auto generate tests with Codegen.
+12. `npx playwright test --project=chromium --headed` runs in headed

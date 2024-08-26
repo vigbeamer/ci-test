@@ -38,25 +38,6 @@ commands:
           working_directory: e2e
           name: Run tests
           command: npx playwright test
-      # - run:
-      #     name: Install jq
-      #     command: apt-get update && apt-get install -y jq
-      # - run:
-      #     working_directory: e2e
-      #     name: Extract stats for notification
-      #     command: |
-      #       STATS=$(jq -r '[.stats.expected, .stats.unexpected, .status.flaky, .stats.skipped] | @tsv' test-results.json)
-      #       read -r PASSED_TESTS FAILED_TESTS FLAKY_TESTS SKIPPED_TESTS \<<< "$STATS"
-      #             if [ "$FAILED_TESTS" -gt 0 ]; then
-      #                   STATUS_MESSAGE=":x:"
-      #             else
-      #                   STATUS_MESSAGE=":white_check_mark:"
-      #             fi
-      #       echo "export STATUS_MESSAGE=$STATUS_MESSAGE
-      #             export PASSED_TESTS=$PASSED_TESTS
-      #             export FAILED_TESTS=$FAILED_TESTS
-      #             export FLAKY_TESTS=$FLAKY_TESTS
-      #             export SKIPPED_TESTS=$SKIPPED_TESTS" >> $BASH_ENV
       - store_artifacts:
           path: e2e/playwright-report
           destination: playwright-test-report

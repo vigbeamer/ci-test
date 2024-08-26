@@ -7,7 +7,6 @@ export const test = authFixture.extend<{
 }>({
   context: async ({}, use) => {
     const pathToExtension = path.join(__dirname, '../../crx/src')
-    console.log('pathToExtension', pathToExtension)
     const context = await chromium.launchPersistentContext('', {
       headless: false,
       args: [

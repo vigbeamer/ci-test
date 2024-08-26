@@ -16,6 +16,7 @@
   },
   "scripts": {
     "show-report": "npx playwright show-report",
-    "test": "WORKERS=${WORKERS:-3} npx playwright test --workers=$WORKERS"
+    "dev": "IS_DEV=true npx playwright test --ui",
+    "test": " npx playwright test"
   }
 }
