@@ -61,7 +61,7 @@ commands:
           path: e2e/playwright-report
           destination: playwright-test-report
       - slack/notify:
-          channel: uf-e2e-reports
+          channel: ci-notif
           event: always
           custom: |
             {
