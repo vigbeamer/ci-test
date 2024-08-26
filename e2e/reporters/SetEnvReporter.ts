@@ -31,7 +31,6 @@ class CustomReporter implements Reporter {
     }
   }
   onEnd() {
-    console.log("heree");
     const bashEnv = process.env.BASH_ENV || "./env.txt";
     const STATUS_MESSAGE =
       this.stats.failed > 0 ? ":x: Failed" : ":white_check_mark: Passed";
